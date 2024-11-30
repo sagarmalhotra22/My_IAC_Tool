@@ -9,10 +9,11 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/sagarmalhotra22/My_IAC_Tool/config"
-
 	compute "cloud.google.com/go/compute/apiv1"
 	computepb "cloud.google.com/go/compute/apiv1/computepb"
+
+	"github.com/sagarmalhotra22/My_IAC_Tool/config"
+	"github.com/sagarmalhotra22/My_IAC_Tool/state"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -61,4 +62,15 @@ func main() {
 	}
 
 	log.Printf("Instance creation started: %v", operation)
+
+	state_obj := &state.State{
+		Instances: []string{cfg.InstanceName},
+	}
+
+	err = state.SaveState("state.json", state_obj)
+	if err != nil {
+		log.Fatalf("Failed to add state configuration in the state file: %v", err)
+
+	}
+
 }

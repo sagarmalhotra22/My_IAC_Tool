@@ -7,8 +7,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"gcpprovision/config"
 	"log"
+
+	"github.com/sagarmalhotra22/My_IAC_Tool/config"
 
 	compute "cloud.google.com/go/compute/apiv1"
 	computepb "cloud.google.com/go/compute/apiv1/computepb"

@@ -5,6 +5,8 @@ import (
 	"os"
 )
 
+var StateFile = "state.json"
+
 type State struct {
 	Instances []string `json:"instances"`
 }
@@ -37,4 +39,15 @@ func LoadState(path string) (*State, error) {
 	}
 
 	return &state, nil
+}
+
+// DeleteState removes the state file.
+func DeleteState(StateFile string) error {
+	if err := os.Remove(StateFile); err != nil {
+		if os.IsNotExist(err) {
+			return nil
+		}
+		return err
+	}
+	return nil
 }

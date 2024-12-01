@@ -20,7 +20,7 @@ var applyCmd = &cobra.Command{
 	Short: "Create a new VM instance",
 	Run: func(cmd *cobra.Command, args []string) {
 		// Load the current state
-		stateFile := "state.json"
+
 		// Passing config file to the parse config function
 		cfg, err := config.ParseConfig("config.yaml")
 		if err != nil {
@@ -70,7 +70,7 @@ var applyCmd = &cobra.Command{
 			Instances: []string{cfg.InstanceName},
 		}
 
-		err = state.SaveState(stateFile, state_obj)
+		err = state.SaveState(state.StateFile, state_obj)
 		if err != nil {
 			log.Fatalf("Failed to add state configuration in the state file: %v", err)
 

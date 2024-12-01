@@ -49,7 +49,7 @@ var DestroyCmd = &cobra.Command{
 		fmt.Printf("VM instance %s deleted. Operation status: %s\n", stateData.InstanceName, op.Status)
 
 		// Removing the state file
-		if err := state.DeleteState(); err != nil {
+		if err := state.DeleteState(state.StateFile); err != nil {
 			log.Fatalf("Failed to delete state file: %v", err)
 		}
 		fmt.Println("State file deleted")

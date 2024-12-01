@@ -1,8 +1,9 @@
 package cmd
 
 import (
-	"github.com/spf13/cobra"
 	"log"
+
+	"github.com/spf13/cobra"
 )
 
 // It is the base command which called without any subcommands
@@ -20,8 +21,8 @@ func Execute() {
 
 func init() {
 	// Subcommands in root command
-    // Add command created the infrastructure
+	// Add command created the infrastructure
 	rootCmd.AddCommand(applyCmd)
-    // Destroys the infrastructure
+	// Destroys the infrastructure
 	rootCmd.AddCommand(destroyCmd)
 }

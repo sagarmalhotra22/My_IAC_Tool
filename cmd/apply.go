@@ -65,12 +65,14 @@ var applyCmd = &cobra.Command{
 		}
 
 		log.Printf("Instance creation started: %v", operation)
-
+		// Saving state to state file
 		state_obj := &state.State{
-			Instances: []string{cfg.InstanceName},
+			Instances: cfg.InstanceName,
+			ProjectId: cfg.ProjectID,
+			Zone:      cfg.Zone,
 		}
 
-		err = state.SaveState(state.StateFile, state_obj)
+		err = state.SaveState(state_obj)
 		if err != nil {
 			log.Fatalf("Failed to add state configuration in the state file: %v", err)
 

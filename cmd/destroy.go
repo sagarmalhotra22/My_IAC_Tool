@@ -13,7 +13,7 @@ import (
 )
 
 // DestroyCmd represents the destroy command to delete a VM instance.
-var DestroyCmd = &cobra.Command{
+var destroyCmd = &cobra.Command{
 	Use:   "destroy",
 	Short: "Delete the GCP VM instance",
 	Run: func(cmd *cobra.Command, args []string) {
@@ -36,9 +36,9 @@ var DestroyCmd = &cobra.Command{
 		defer instancesClient.Close()
 		// createing delete request
 		req := &computepb.DeleteInstanceRequest{
-			Project:  stateData.ProjectID,
+			Instance: stateData.Instances,
+			Project:  stateData.ProjectId,
 			Zone:     stateData.Zone,
-			Instance: stateData.InstanceName,
 		}
 		// deleting the instance
 		op, err := instancesClient.Delete(ctx, req)
@@ -46,10 +46,10 @@ var DestroyCmd = &cobra.Command{
 			log.Fatalf("Failed to delete instance: %v", err)
 		}
 
-		fmt.Printf("VM instance %s deleted. Operation status: %s\n", stateData.InstanceName, op.Status)
+		fmt.Printf("VM instance %s deleted. %s\n", stateData.Instances)
 
 		// Removing the state file
-		if err := state.DeleteState(state.StateFile); err != nil {
+		if err := state.DeleteState(); err != nil {
 			log.Fatalf("Failed to delete state file: %v", err)
 		}
 		fmt.Println("State file deleted")

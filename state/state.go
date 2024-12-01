@@ -8,11 +8,13 @@ import (
 var StateFile = "state.json"
 
 type State struct {
-	Instances []string `json:"instances"`
+	Instances string `json:"instances"`
+	ProjectId string `json:"projectId"`
+	Zone      string `json:"zone"`
 }
 
-func SaveState(path string, state *State) error {
-	file, err := os.Create(path)
+func SaveState(state *State) error {
+	file, err := os.Create(StateFile)
 	if err != nil {
 		return err
 	}
@@ -22,8 +24,8 @@ func SaveState(path string, state *State) error {
 	return encoder.Encode(state)
 }
 
-func LoadState(path string) (*State, error) {
-	file, err := os.Open(path)
+func LoadState() (*State, error) {
+	file, err := os.Open(StateFile)
 	if err != nil {
 		if os.IsNotExist(err) {
 			return &State{}, nil
@@ -42,7 +44,7 @@ func LoadState(path string) (*State, error) {
 }
 
 // DeleteState removes the state file.
-func DeleteState(StateFile string) error {
+func DeleteState() error {
 	if err := os.Remove(StateFile); err != nil {
 		if os.IsNotExist(err) {
 			return nil

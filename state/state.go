@@ -2,6 +2,7 @@ package state
 
 import (
 	"encoding/json"
+	"log"
 	"os"
 )
 
@@ -28,7 +29,7 @@ func LoadState() (*State, error) {
 	file, err := os.Open(StateFile)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return &State{}, nil
+			log.Fatalf("Failed to load state: No state file")
 		}
 		return nil, err
 	}

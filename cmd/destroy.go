@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/sagarmalhotra22/My_IAC_Tool/state"
 
@@ -19,6 +20,12 @@ var destroyCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		// Loading state file
 		stateData, err := state.LoadState()
+		fmt.Println(stateData)
+		fmt.Println("------------")
+		fmt.Println(err)
+		fmt.Println("------------")
+		fmt.Println(os.IsNotExist(err))
+
 		if err != nil {
 			log.Fatalf("Failed to load state: %v", err)
 		}
@@ -26,6 +33,7 @@ var destroyCmd = &cobra.Command{
 		if stateData == nil {
 			fmt.Println("No instance found in state.json")
 			return
+
 		}
 		// seting context for the request
 		ctx := context.Background()

@@ -41,12 +41,12 @@ var destroyCmd = &cobra.Command{
 			Zone:     stateData.Zone,
 		}
 		// deleting the instance
-		op, err := instancesClient.Delete(ctx, req)
+		_, err = instancesClient.Delete(ctx, req)
 		if err != nil {
 			log.Fatalf("Failed to delete instance: %v", err)
 		}
 
-		fmt.Printf("VM instance %s deleted. %s\n", stateData.Instances)
+		fmt.Printf("VM instance %s deleted.\n", stateData.Instances)
 
 		// Removing the state file
 		if err := state.DeleteState(); err != nil {
